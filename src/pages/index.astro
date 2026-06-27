@@ -1,0 +1,854 @@
+---
+const youtubeBackgroundUrl = "https://www.youtube.com/watch?v=HjTJtS7r8do";
+
+const getYouTubeId = (url) => {
+  try {
+    const parsed = new URL(url);
+
+    if (parsed.hostname.includes("youtu.be")) {
+      return parsed.pathname.replace("/", "");
+    }
+
+    if (parsed.searchParams.get("v")) {
+      return parsed.searchParams.get("v");
+    }
+
+    const embedMatch = parsed.pathname.match(/\/embed\/([^/?]+)/);
+    if (embedMatch) {
+      return embedMatch[1];
+    }
+  } catch {
+    return url;
+  }
+
+  return url;
+};
+
+const youtubeId = getYouTubeId(youtubeBackgroundUrl);
+const youtubeBackgroundEmbed = `https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${youtubeId}&playsinline=1&modestbranding=1&rel=0&showinfo=0`;
+
+const links = [
+  {
+    label: "RESERVAR / BOOK A TABLE",
+    sub: "Confirma tu mesa via WhatsApp",
+    href: "https://wa.me/51999999999?text=Hola,%20quiero%20hacer%20una%20reserva%20en%20PIETRA",
+    icon: "calendar",
+    highlight: true,
+  },
+  {
+    label: "MENU / MENU",
+    sub: "Carta completa - ES / EN / IT",
+    href: "#menu",
+    icon: "menu",
+  },
+  {
+    label: "CARTA DE VINOS / WINE LIST",
+    sub: "Vinos, pisco & cocteles de autor",
+    href: "#vinos",
+    icon: "wine",
+  },
+  {
+    label: "RESTOBAR - 2DO PISO",
+    sub: "Bar, lounge & ambiente de altura",
+    href: "#restobar",
+    icon: "bar",
+  },
+  {
+    label: "UBICACION / LOCATION",
+    sub: "Centro Historico de Cusco, Peru",
+    href: "https://maps.google.com/?q=PIETRA+Cusco",
+    icon: "pin",
+  },
+  {
+    label: "TRIPADVISOR",
+    sub: "5 estrellas - Resenas / Reviews",
+    href: "https://tripadvisor.com",
+    icon: "star",
+  },
+];
+
+const reviews = [
+  {
+    name: "Daniela Britsia",
+    initials: "DB",
+    color: "#8B7355",
+    text: "Ambiente precioso, comida deliciosa y una atencion muy calida. Ideal para cenar en el centro historico de Cusco.",
+  },
+  {
+    name: "Gaby Caso",
+    initials: "GC",
+    color: "#5B8A6F",
+    text: "El segundo piso tiene una atmosfera increible. Los cocteles y las pastas fueron lo mejor de la noche.",
+  },
+  {
+    name: "Carlos Deza",
+    initials: "CD",
+    color: "#2E7D6B",
+    text: "Una joya en Cusco. Se siente la mezcla entre piedra antigua, buen servicio y cocina peruana contemporanea.",
+  },
+  {
+    name: "Maria Rodriguez",
+    initials: "MR",
+    color: "#C0392B",
+    text: "Fuimos por una reserva familiar y todos salimos felices. Muy buena presentacion de platos y excelente ubicacion.",
+  },
+  {
+    name: "Sofia Fernandez",
+    initials: "SF",
+    color: "#6C3483",
+    text: "Recomendado para una cena especial. El lugar es elegante sin sentirse frio, y el equipo atiende con detalle.",
+  },
+];
+
+const gallery = [
+  {
+    image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80",
+    category: "Ambiente",
+    title: "Salon principal",
+    excerpt: "Un espacio intimo para cenas, reservas y encuentros en el centro historico.",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1200&q=80",
+    category: "Restobar",
+    title: "Segundo piso",
+    excerpt: "Bar, lounge y cocteles de autor para cerrar la noche con calma.",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1543353071-873f17a7a088?auto=format&fit=crop&w=1200&q=80",
+    category: "Cocina",
+    title: "Platos de la casa",
+    excerpt: "Sabores peruanos, fusion, pastas y carnes servidas con personalidad.",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=1200&q=80",
+    category: "Servicio",
+    title: "Experiencia PIETRA",
+    excerpt: "Atencion cercana para reservas, celebraciones y visitas especiales.",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1200&q=80",
+    category: "Lugar",
+    title: "Cocina y piedra",
+    excerpt: "La identidad del restaurante nace del contraste entre historia y fuego vivo.",
+  },
+];
+
+const socials = [
+  { label: "Instagram", href: "https://instagram.com" },
+  { label: "Facebook", href: "https://facebook.com" },
+  { label: "WhatsApp", href: "https://wa.me/51999999999" },
+];
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="PIETRA - Restaurante & Restobar en el Centro Historico de Cusco. Cocina peruana, fusion, pastas y carnes sobre un muro inca milenario." />
+  <title>PIETRA - Restaurante & Restobar - Cusco</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --negro: #1A1612;
+      --negro-mid: #231E19;
+      --oro: #C9A84C;
+      --oro-pale: #E2C97E;
+      --brasa: #D4622A;
+      --blanco: #F5F0E8;
+      --blanco-dim: rgba(245,240,232,0.62);
+      --border: rgba(201,168,76,0.28);
+      --glass: rgba(26,22,18,0.68);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--negro);
+      color: var(--blanco);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      min-height: 100dvh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+
+    .video-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(212,98,42,0.16) 0%, transparent 62%),
+        var(--negro);
+    }
+
+    .video-bg iframe {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 177.78vh;
+      height: 100vh;
+      min-width: 100vw;
+      min-height: 56.25vw;
+      transform: translate(-50%, -50%) scale(1.12);
+      border: 0;
+      pointer-events: none;
+      opacity: 0.42;
+      filter: saturate(0.78) contrast(1.06) brightness(0.72);
+    }
+
+    .video-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(180deg, rgba(26,22,18,0.42), rgba(26,22,18,0.82)),
+        radial-gradient(circle at 50% 15%, rgba(201,168,76,0.13), transparent 38%),
+        repeating-linear-gradient(
+          112deg,
+          transparent,
+          transparent 120px,
+          rgba(201,168,76,0.035) 120px,
+          rgba(201,168,76,0.035) 121px
+        ),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+      background-size: cover, cover, auto, 400px 400px;
+      pointer-events: none;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 3rem 1.25rem 4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .logo-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2.5rem;
+      text-align: center;
+    }
+
+    .logo-emblem {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      border: 1.5px solid var(--oro);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      background: radial-gradient(circle at 40% 35%, rgba(201,168,76,0.14), rgba(26,22,18,0.7) 66%);
+      box-shadow:
+        0 0 0 6px rgba(201,168,76,0.06),
+        0 0 32px rgba(212,98,42,0.2),
+        inset 0 1px 0 rgba(201,168,76,0.2);
+      backdrop-filter: blur(8px);
+    }
+
+    .logo-emblem svg { width: 54px; height: 54px; }
+
+    .logo-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 12vw, 2.6rem);
+      font-weight: 300;
+      letter-spacing: 0.35em;
+      line-height: 1;
+      margin-bottom: 0.35rem;
+      text-transform: uppercase;
+      padding-left: 0.35em;
+    }
+
+    .logo-tagline {
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      color: var(--oro);
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+
+    .description {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--blanco-dim);
+      text-align: center;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      max-width: 340px;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border), transparent);
+      margin: 0.5rem 0 1.75rem;
+    }
+
+    .links {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .link-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      min-height: 74px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--glass);
+      color: var(--blanco);
+      transition: border-color 0.25s, background 0.25s, transform 0.2s;
+      backdrop-filter: blur(8px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .link-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(201,168,76,0.05), transparent);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .link-item:hover {
+      border-color: rgba(201,168,76,0.58);
+      background: rgba(35,30,25,0.86);
+      transform: translateY(-1px);
+    }
+
+    .link-item:hover::before { opacity: 1; }
+
+    .link-item.highlight {
+      border-color: rgba(212,98,42,0.55);
+      background: rgba(48,30,22,0.76);
+    }
+
+    .link-icon {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+      color: var(--oro);
+    }
+
+    .link-item.highlight .link-icon {
+      border-color: rgba(212,98,42,0.48);
+      color: var(--brasa);
+    }
+
+    .link-icon svg,
+    .link-arrow svg {
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .link-icon svg { width: 16px; height: 16px; }
+    .link-arrow svg { width: 14px; height: 14px; }
+
+    .link-text { flex: 1; min-width: 0; }
+
+    .link-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      font-weight: 400;
+      text-transform: uppercase;
+      display: block;
+      line-height: 1.35;
+      margin-bottom: 0.2rem;
+    }
+
+    .link-item.highlight .link-label { color: var(--oro-pale); }
+
+    .link-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.86rem;
+      color: var(--blanco-dim);
+      display: block;
+      line-height: 1.25;
+    }
+
+    .link-arrow {
+      color: rgba(201,168,76,0.38);
+      flex-shrink: 0;
+    }
+
+    .content-section {
+      width: 100%;
+      margin-top: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: rgba(26,22,18,0.72);
+      backdrop-filter: blur(10px);
+      padding: 1.15rem;
+      overflow: hidden;
+    }
+
+    .section-label {
+      color: var(--oro);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-align: center;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .carousel { overflow: hidden; }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.45s ease;
+      will-change: transform;
+    }
+
+    .review-card,
+    .gallery-card {
+      flex: 0 0 100%;
+    }
+
+    .review-card {
+      border: 1px solid rgba(201,168,76,0.18);
+      background: rgba(245,240,232,0.045);
+      border-radius: 4px;
+      padding: 0.95rem;
+      min-height: 166px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .review-head {
+      display: flex;
+      align-items: center;
+      gap: 0.72rem;
+    }
+
+    .review-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 600;
+      flex: 0 0 auto;
+    }
+
+    .review-name {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 500;
+      line-height: 1.25;
+    }
+
+    .review-stars {
+      color: #FFBC00;
+      font-size: 0.7rem;
+      line-height: 1;
+      letter-spacing: 0.05em;
+      margin-top: 0.22rem;
+    }
+
+    .review-text {
+      color: var(--blanco-dim);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      line-height: 1.45;
+      font-style: italic;
+    }
+
+    .gallery-card {
+      border: 1px solid rgba(201,168,76,0.18);
+      background: rgba(245,240,232,0.045);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .gallery-image {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      background: var(--negro-mid);
+      overflow: hidden;
+    }
+
+    .gallery-image img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .gallery-category {
+      position: absolute;
+      top: 0.65rem;
+      left: 0.65rem;
+      background: rgba(26,22,18,0.78);
+      color: var(--oro-pale);
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 2px;
+      padding: 0.22rem 0.52rem;
+      font-size: 0.56rem;
+      font-weight: 600;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      backdrop-filter: blur(6px);
+    }
+
+    .gallery-body {
+      padding: 0.9rem;
+    }
+
+    .gallery-body h3 {
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1.3;
+      margin-bottom: 0.36rem;
+    }
+
+    .gallery-body p {
+      color: var(--blanco-dim);
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      line-height: 1.42;
+    }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.42rem;
+      padding-top: 0.8rem;
+    }
+
+    .carousel-dot {
+      width: 6px;
+      height: 6px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(245,240,232,0.3);
+      cursor: pointer;
+      padding: 0;
+      transition: width 0.25s, background 0.25s, border-radius 0.25s;
+    }
+
+    .carousel-dot.is-active {
+      width: 20px;
+      border-radius: 99px;
+      background: var(--oro);
+    }
+
+    .socials {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .social-link {
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--blanco-dim);
+      background: rgba(26,22,18,0.52);
+      backdrop-filter: blur(8px);
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+
+    .social-link:hover {
+      border-color: var(--oro);
+      color: var(--oro);
+      transform: translateY(-1px);
+    }
+
+    .social-link svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    .footer {
+      margin-top: 2.5rem;
+      text-align: center;
+    }
+
+    .footer-loc {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: rgba(245,240,232,0.34);
+      text-transform: uppercase;
+      line-height: 1.8;
+    }
+
+    .footer-loc span { display: block; }
+
+    .brasa-line {
+      width: 32px;
+      height: 2px;
+      background: linear-gradient(to right, var(--brasa), transparent);
+      margin: 1.5rem auto;
+      border-radius: 1px;
+    }
+
+    @media (max-width: 360px) {
+      .page { padding-inline: 1rem; }
+      .link-item { padding-inline: 1rem; }
+      .link-label { font-size: 0.66rem; }
+      .content-section { padding: 1rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .link-item:hover,
+      .social-link:hover {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="video-bg" aria-hidden="true">
+    <iframe
+      src={youtubeBackgroundEmbed}
+      title="Video de fondo PIETRA"
+      allow="autoplay; encrypted-media; picture-in-picture"
+      tabindex="-1"
+    ></iframe>
+  </div>
+
+  <main class="page">
+    <div class="logo-wrap">
+      <div class="logo-emblem">
+        <svg viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="9" y="34" width="36" height="8" rx="0.5" fill="none" stroke="#C9A84C" stroke-width="1"/>
+          <rect x="13" y="26" width="28" height="8" rx="0.5" fill="none" stroke="#C9A84C" stroke-width="1"/>
+          <rect x="17" y="18" width="20" height="8" rx="0.5" fill="none" stroke="#C9A84C" stroke-width="0.75"/>
+          <path d="M27 16 C27 16 24 12 27 8 C27 8 28 11 30 10 C30 10 28 13 30 15 C30 15 28 14 27 16Z" fill="#D4622A" opacity="0.85"/>
+          <line x1="9" y1="34" x2="45" y2="34" stroke="#C9A84C" stroke-width="0.4" opacity="0.5"/>
+          <line x1="13" y1="26" x2="41" y2="26" stroke="#C9A84C" stroke-width="0.4" opacity="0.5"/>
+          <line x1="17" y1="18" x2="37" y2="18" stroke="#C9A84C" stroke-width="0.4" opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="logo-name">PIETRA</div>
+      <div class="logo-tagline">Ristorante &middot; Restobar &middot; Cusco</div>
+    </div>
+
+    <p class="description">
+      Cocina peruana y fusion sobre un muro inca milenario.<br/>
+      Sobre piedra antigua - fuego vivo - sabor de altura.
+    </p>
+
+    <div class="divider"></div>
+
+    <nav class="links" aria-label="Links de PIETRA">
+      {links.map((link) => (
+        <a class={`link-item ${link.highlight ? "highlight" : ""}`} href={link.href} target="_blank" rel="noopener">
+          <span class="link-icon">
+            {link.icon === "calendar" && <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>}
+            {link.icon === "menu" && <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>}
+            {link.icon === "wine" && <svg viewBox="0 0 24 24"><path d="M8 22h8"/><path d="M12 11v11"/><path d="M7 2h10l-1 9a5 5 0 0 1-8 0Z"/></svg>}
+            {link.icon === "bar" && <svg viewBox="0 0 24 24"><polygon points="12,2 22,8.5 22,15.5 12,22 2,15.5 2,8.5"/><line x1="12" y1="22" x2="12" y2="15.5"/><polyline points="22,8.5 12,15.5 2,8.5"/></svg>}
+            {link.icon === "pin" && <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>}
+            {link.icon === "star" && <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>}
+          </span>
+
+          <span class="link-text">
+            <span class="link-label">{link.label}</span>
+            <span class="link-sub">{link.sub}</span>
+          </span>
+
+          <span class="link-arrow">
+            <svg viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
+          </span>
+        </a>
+      ))}
+    </nav>
+
+    <section class="content-section" aria-labelledby="reviews-title">
+      <p class="section-label" id="reviews-title">Comentarios de Google</p>
+
+      <div class="carousel">
+        <div class="carousel-track" id="reviewsTrack">
+          {reviews.map((review) => (
+            <article class="review-card">
+              <div class="review-head">
+                <div class="review-avatar" style={`background:${review.color}`}>
+                  <span>{review.initials}</span>
+                </div>
+
+                <div>
+                  <span class="review-name">{review.name}</span>
+                  <div class="review-stars" aria-label="5 estrellas">*****</div>
+                </div>
+              </div>
+
+              <p class="review-text">"{review.text}"</p>
+            </article>
+          ))}
+        </div>
+
+        <div class="carousel-dots" id="reviewsDots">
+          {reviews.map((_, index) => (
+            <button class={`carousel-dot ${index === 0 ? "is-active" : ""}`} data-index={index} aria-label={`Ver comentario ${index + 1}`}></button>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section" aria-labelledby="gallery-title">
+      <p class="section-label" id="gallery-title">Galeria</p>
+
+      <div class="carousel">
+        <div class="carousel-track" id="galleryTrack">
+          {gallery.map((item) => (
+            <article class="gallery-card">
+              <div class="gallery-image">
+                <img src={item.image} alt={item.title} loading="lazy" />
+                <span class="gallery-category">{item.category}</span>
+              </div>
+
+              <div class="gallery-body">
+                <h3>{item.title}</h3>
+                <p>{item.excerpt}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div class="carousel-dots" id="galleryDots">
+          {gallery.map((_, index) => (
+            <button class={`carousel-dot ${index === 0 ? "is-active" : ""}`} data-index={index} aria-label={`Ver imagen ${index + 1}`}></button>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <div class="socials">
+      <a class="social-link" href={socials[0].href} target="_blank" rel="noopener" aria-label={socials[0].label}>
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/>
+        </svg>
+      </a>
+
+      <a class="social-link" href={socials[1].href} target="_blank" rel="noopener" aria-label={socials[1].label}>
+        <svg viewBox="0 0 24 24">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+      </a>
+
+      <a class="social-link" href={socials[2].href} target="_blank" rel="noopener" aria-label={socials[2].label}>
+        <svg viewBox="0 0 24 24">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="brasa-line"></div>
+
+    <footer class="footer">
+      <p class="footer-loc">
+        <span>Centro Historico de Cusco - Peru</span>
+        <span style="margin-top:0.25rem; color: rgba(201,168,76,0.42);">PIETRA</span>
+      </p>
+    </footer>
+  </main>
+
+  <script is:inline>
+    (function () {
+      function initCarousel(trackId, dotsId, autoMs) {
+        var track = document.getElementById(trackId);
+        var dotsWrap = document.getElementById(dotsId);
+        if (!track || !dotsWrap) return;
+
+        var dots = Array.prototype.slice.call(dotsWrap.querySelectorAll('.carousel-dot'));
+        var total = track.children.length;
+        var current = 0;
+        var interval;
+        var startX = 0;
+
+        function goTo(index) {
+          current = (index + total) % total;
+          track.style.transform = 'translateX(-' + (current * 100) + '%)';
+          dots.forEach(function (dot, dotIndex) {
+            dot.classList.toggle('is-active', dotIndex === current);
+          });
+        }
+
+        function startAuto() {
+          window.clearInterval(interval);
+          interval = window.setInterval(function () {
+            goTo(current + 1);
+          }, autoMs);
+        }
+
+        dots.forEach(function (dot) {
+          dot.addEventListener('click', function () {
+            goTo(Number(dot.dataset.index || 0));
+            startAuto();
+          });
+        });
+
+        track.addEventListener('touchstart', function (event) {
+          startX = event.touches[0].clientX;
+        }, { passive: true });
+
+        track.addEventListener('touchend', function (event) {
+          var diff = startX - event.changedTouches[0].clientX;
+          if (Math.abs(diff) > 40) {
+            goTo(current + (diff > 0 ? 1 : -1));
+            startAuto();
+          }
+        });
+
+        startAuto();
+      }
+
+      initCarousel('reviewsTrack', 'reviewsDots', 5000);
+      initCarousel('galleryTrack', 'galleryDots', 5200);
+    })();
+  </script>
+</body>
+</html>
