@@ -851,6 +851,28 @@ const socials = [
       margin: 0.25rem 0;
     }
   </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=AW-18544296617"></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-18544296617');
+  </script>
+
+  <!-- Conversión: clic en cualquier enlace a WhatsApp -->
+  <script is:inline>
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href*="wa.me"], a[href*="api.whatsapp.com"]');
+      if (!a) return;
+      gtag('event', 'conversion', {
+        'send_to': 'AW-18544296617/KN6RCLS44bUdEKmFzopF',
+        'value': 150.0,
+        'currency': 'PEN'
+      });
+    }, true);
+  </script>
 </head>
 
 <body>
