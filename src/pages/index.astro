@@ -806,6 +806,8 @@ const socials = [
       .page { padding-inline: 1rem; }
       .link-item { padding-inline: 1rem; }
       .link-label { font-size: 0.66rem; }
+      .secondary-btn { padding-inline: 1rem; font-size: 0.68rem; }
+      .booking-info { font-size: 0.88rem; }
       .content-section { padding: 1rem; }
     }
 
@@ -815,6 +817,7 @@ const socials = [
         transition-duration: 0.01ms !important;
       }
       .link-item:hover,
+      .secondary-btn:hover,
       .social-link:hover { transform: none; }
     }
 
@@ -850,6 +853,93 @@ const socials = [
       background: linear-gradient(to right, transparent, var(--border), transparent);
       margin: 0.25rem 0;
     }
+
+    /* ── Booking Action Group & Secondary Button ── */
+    .booking-group {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .booking-actions {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .secondary-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      width: 100%;
+      min-height: 48px;
+      padding: 0.75rem 1.25rem;
+      border: 1px solid rgba(201,168,76,0.35);
+      border-radius: 4px;
+      background: rgba(35,30,25,0.72);
+      color: var(--oro-pale);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      backdrop-filter: blur(8px);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.25s, background 0.25s, color 0.25s, transform 0.2s, box-shadow 0.25s;
+    }
+
+    .secondary-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(201,168,76,0.06), transparent);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .secondary-btn:hover {
+      border-color: rgba(201,168,76,0.7);
+      background: rgba(45,38,32,0.92);
+      color: #FFFFFF;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(201,168,76,0.18);
+    }
+
+    .secondary-btn:hover::before {
+      opacity: 1;
+    }
+
+    .secondary-btn-icon {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      color: var(--oro);
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform 0.2s;
+    }
+
+    .secondary-btn:hover .secondary-btn-icon {
+      transform: scale(1.1);
+    }
+
+    .booking-info {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: rgba(245,240,232,0.72);
+      text-align: center;
+      line-height: 1.45;
+      padding: 0.1rem 0.5rem 0.25rem;
+      letter-spacing: 0.02em;
+    }
   </style>
 
   <!-- Google tag (gtag.js) -->
@@ -861,16 +951,31 @@ const socials = [
     gtag('config', 'AW-18544296617');
   </script>
 
-  <!-- Conversión: clic en cualquier enlace a WhatsApp -->
+  <!-- Conversiones por clic: WhatsApp y Google Maps -->
   <script is:inline>
     document.addEventListener('click', function (e) {
-      var a = e.target.closest && e.target.closest('a[href*="wa.me"], a[href*="api.whatsapp.com"]');
+      var a = e.target.closest && e.target.closest('a[href]');
       if (!a) return;
-      gtag('event', 'conversion', {
-        'send_to': 'AW-18544296617/KN6RCLS44bUdEKmFzopF',
-        'value': 150.0,
-        'currency': 'PEN'
-      });
+      var href = a.href || '';
+
+      // 1) Reserva por WhatsApp
+      if (/wa\.me|api\.whatsapp\.com/.test(href)) {
+        gtag('event', 'conversion', {
+          'send_to': 'AW-18544296617/KN6RCLS44bUdEKmFzopF',
+          'value': 150.0,
+          'currency': 'PEN'
+        });
+        return;
+      }
+
+      // 2) Cómo llegar (Google Maps)
+      if (/google\.[a-z.]+\/maps|maps\.app\.goo\.gl|goo\.gl\/maps|maps\.google\./.test(href)) {
+        gtag('event', 'conversion', {
+          'send_to': 'AW-18544296617/UtfWCLrBjbcdEKmFzopF',
+          'value': 75.0,
+          'currency': 'PEN'
+        });
+      }
     }, true);
   </script>
 </head>
@@ -913,23 +1018,54 @@ const socials = [
     <nav class="links" aria-label="PIETRA Links">
       {links.map((link) => (
         <>
-        <a class={`link-item ${link.highlight ? "highlight" : ""}`} href={link.href} target="_blank" rel="noopener">
-          <span class="link-icon">
-            {link.icon === "calendar" && <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>}
-            {link.icon === "menu" && <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>}
-            {link.icon === "wine" && <svg viewBox="0 0 24 24"><path d="M8 22h8"/><path d="M12 11v11"/><path d="M7 2h10l-1 9a5 5 0 0 1-8 0Z"/></svg>}
-            {link.icon === "bar" && <svg viewBox="0 0 24 24"><polygon points="12,2 22,8.5 22,15.5 12,22 2,15.5 2,8.5"/><line x1="12" y1="22" x2="12" y2="15.5"/><polyline points="22,8.5 12,15.5 2,8.5"/></svg>}
-            {link.icon === "pin" && <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>}
-            {link.icon === "star" && <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>}
-          </span>
-          <span class="link-text">
-            <span class="link-label">{link.label}</span>
-            <span class="link-sub">{link.sub}</span>
-          </span>
-          <span class="link-arrow">
-            <svg viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
-          </span>
-        </a>
+        {link.highlight ? (
+          <div class="booking-group">
+            <div class="booking-actions">
+              <a class="link-item highlight" href={link.href} target="_blank" rel="noopener">
+                <span class="link-icon">
+                  <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                </span>
+                <span class="link-text">
+                  <span class="link-label">{link.label}</span>
+                  <span class="link-sub">{link.sub}</span>
+                </span>
+                <span class="link-arrow">
+                  <svg viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
+                </span>
+              </a>
+              <a
+                class="secondary-btn"
+                href="https://www.google.com/maps/dir/?api=1&destination=PIETRA+Restaurant+Calle+Suecia+320+Cusco"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg class="secondary-btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+                </svg>
+                <span>GET DIRECTIONS</span>
+              </a>
+            </div>
+            <p class="booking-info">Walk-ins welcome · Open daily 11 AM – 10 PM</p>
+          </div>
+        ) : (
+          <a class={`link-item ${link.highlight ? "highlight" : ""}`} href={link.href} target="_blank" rel="noopener">
+            <span class="link-icon">
+              {link.icon === "calendar" && <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>}
+              {link.icon === "menu" && <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>}
+              {link.icon === "wine" && <svg viewBox="0 0 24 24"><path d="M8 22h8"/><path d="M12 11v11"/><path d="M7 2h10l-1 9a5 5 0 0 1-8 0Z"/></svg>}
+              {link.icon === "bar" && <svg viewBox="0 0 24 24"><polygon points="12,2 22,8.5 22,15.5 12,22 2,15.5 2,8.5"/><line x1="12" y1="22" x2="12" y2="15.5"/><polyline points="22,8.5 12,15.5 2,8.5"/></svg>}
+              {link.icon === "pin" && <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>}
+              {link.icon === "star" && <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>}
+            </span>
+            <span class="link-text">
+              <span class="link-label">{link.label}</span>
+              <span class="link-sub">{link.sub}</span>
+            </span>
+            <span class="link-arrow">
+              <svg viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
+            </span>
+          </a>
+        )}
         {link.featured && <div class="link-separator"></div>}
         </>
       ))}
